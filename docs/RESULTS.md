@@ -1,7 +1,7 @@
 # Results — Build Cache Leak Pilot
 
-Registered design: `prereg-v1` (3fb359c) (git: prereg-v1, 3fb359c). Raw results: eb13c54
-(git: eb13c54). Source tags point to
+Registered design: `prereg-v1` (51d2c55) (git: prereg-v1, 51d2c55). Raw results: 0092d63
+(git: 0092d63). Source tags point to
 `results/matrix.json`, `results/prevalence.json`, `results/versions.txt`,
 `docs/RELATED.md`, and, for predicted values and pattern design only,
 `docs/PREREGISTRATION.md` at `prereg-v1`. A sentence without a tag is labelled
@@ -26,7 +26,7 @@ attest-min and P2b · attest-min. Both were predicted RECOVERABLE † and measur
 NOT_RECOVERABLE (matrix.json: P2/attest_provmin, P2b/attest_provmin;
 PREREGISTRATION.md §5). The registration de-gated those two cells before the run, so
 they are reported measurements, not success criteria (PREREGISTRATION.md §5, §10
-item 6; git: 3fb359c, eb13c54). Their miss is itself a measured version fact: at BuildKit v0.33.1, the
+item 6; git: 51d2c55, 0092d63). Their miss is itself a measured version fact: at BuildKit v0.33.1, the
 build-arg marker could not be recovered from the min-mode provenance attestation in our
 setup (matrix.json: P2/attest_provmin, P2b/attest_provmin; versions.txt).
 
@@ -216,9 +216,9 @@ pilot does not report a new leak class or a new attack.
 **What this pilot adds.** Within those limits, the contribution is narrow.
 
 1. **A pre-registered, controlled measurement.** The hypotheses, the patterns and the
-   full predicted matrix are in the registration commit (prereg-v1 / 3fb359c), which
-   precedes the earliest commit containing any build output (eb13c54) in the repository
-   history (PREREGISTRATION.md §5, §10; git: prereg-v1, eb13c54). Recoverability was then measured across
+   full predicted matrix are in the registration commit (prereg-v1 / 51d2c55), which
+   precedes the earliest commit containing any build output (0092d63) in the repository
+   history (PREREGISTRATION.md §5, §10; git: prereg-v1, 0092d63). Recoverability was then measured across
    the final image, the `mode=min` and `mode=max` registry cache exports, and the
    min-mode and max-mode provenance attestations. A `--mount=type=secret` control (P4)
    was NOT_RECOVERABLE in all five locations probed for it, with attest-min at BuildKit
@@ -277,11 +277,11 @@ The holes we know about, roughly in order of how much they limit the results.
    and not corrected (Section 1; matrix.json: P2/cache_max, P2/attest_provmin,
    P2b/attest_provmin).
 8. **The design was amended before the run.** Between the initial registration commit
-   (f7310b3) and `prereg-v1`, the probe, the build-args, the provenance pinning and the P2b
-   predictions were changed. All of this happened before any build (git: prereg-v1, eb13c54),
+   (73695c2) and `prereg-v1`, the probe, the build-args, the provenance pinning and the P2b
+   predictions were changed. All of this happened before any build (git: prereg-v1, 0092d63),
    and it is logged in
-   PREREGISTRATION.md §10 (git: f7310b3). A reader should judge the predictions at
-   `prereg-v1`, not at f7310b3.
+   PREREGISTRATION.md §10 (git: 73695c2). A reader should judge the predictions at
+   `prereg-v1`, not at 73695c2.
 9. **Prevalence counts are file matches only.** Part 2 recorded GitHub code-search
    `total_count`, which counts indexed files and is approximate. No contents or names
    were fetched, and no third-party image or cache was accessed (PREREGISTRATION.md §6,
