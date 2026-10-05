@@ -278,7 +278,8 @@ The holes we know about, roughly in order of how much they limit the results.
    P2b/attest_provmin).
 8. **The design was amended before the run.** Between the initial registration commit
    (f7310b3) and `prereg-v1`, the probe, the build-args, the provenance pinning and the P2b
-   predictions were changed. All of this happened before any build, and it is logged in
+   predictions were changed. All of this happened before any build (git: prereg-v1, eb13c54),
+   and it is logged in
    PREREGISTRATION.md §10 (git: f7310b3). A reader should judge the predictions at
    `prereg-v1`, not at f7310b3.
 9. **Prevalence counts are file matches only.** Part 2 recorded GitHub code-search
