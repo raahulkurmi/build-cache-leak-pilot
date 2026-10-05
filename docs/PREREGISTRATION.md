@@ -40,7 +40,9 @@ registry as cache manifests/blobs. Our hypothesis:
 > `ARG LEAK_MARKER`, no `ENV`) is recorded in the SLSA provenance attestation under
 > `--provenance=mode=max` and is recoverable from the **`:final` image index's
 > attestation manifest**, even though the value never enters the final image config,
-> any layer, or the cache export. Under `--provenance=mode=min` it is absent. This
+> any layer, or the cache export. Whether it also appears under
+> `--provenance=mode=min` is a reported measurement, not part of H1b: build-arg
+> recording in min-mode provenance depends on the BuildKit version. This
 > isolates the invocation-args channel (build-args and/or the LLB definition embedded
 > in max provenance) from P2's layer/config channel.
 
@@ -81,7 +83,7 @@ The final stage never references the secret.
 |-----|---------|----------------------------------------|----------------------------|
 | P1  | `COPY .npmrc` | A file (`.npmrc` containing the token) is `COPY`'d into the builder | Leaks in max cache |
 | P2  | `ARG`/`ENV` | `ARG SECRET` passed via `--build-arg` (to P2 only), promoted to `ENV SECRET` in builder | Leaks in max cache (image config of builder stage) |
-| P2b | `ARG` only | `ARG LEAK_MARKER` passed via `--build-arg` (to P2b only), consumed by a `RUN`, never written to a layer, no `ENV` | Leaks **only** in the provenance attestation under `--provenance=mode=max` (H1b) |
+| P2b | `ARG` only | `ARG LEAK_MARKER` passed via `--build-arg` (to P2b only), consumed by a `RUN`, never written to a layer, no `ENV` | Leaks in the provenance attestation under `--provenance=mode=max` (H1b); not in any image/cache location |
 | P3  | `RUN echo` | Literal marker baked into `RUN echo "<marker>" > /tmp/secret.txt` (substituted into the per-run context copy; no build-arg) | Leaks in max cache (layer diff) |
 | P4  | `--mount=type=secret` **(control)** | `RUN --mount=type=secret,id=tok cat /run/secrets/tok`; receives **zero** build-args | **Does not leak** anywhere |
 
@@ -148,11 +150,15 @@ Filled in **before** running. `RESULTS.md` will place the observed matrix beside
 | Pattern | Final config | Final layers | `mode=min` cache | `mode=max` cache | Prov-attest (max) | Prov-attest (min) |
 |---------|:---:|:---:|:---:|:---:|:---:|:---:|
 | P1 COPY .npmrc         | NOT | NOT | NOT | **RECOVERABLE** | n/a | NOT |
-| P2 ARG/ENV             | NOT | NOT | NOT | **RECOVERABLE** | n/a | NOT |
-| P2b ARG only           | NOT | NOT | NOT | NOT | **RECOVERABLE** | NOT |
+| P2 ARG/ENV             | NOT | NOT | NOT | **RECOVERABLE** | n/a | RECOVERABLE † |
+| P2b ARG only           | NOT | NOT | NOT | NOT | **RECOVERABLE** | RECOVERABLE † |
 | P3 RUN echo            | NOT | NOT | NOT | **RECOVERABLE** | n/a | NOT |
 | P4 secret mount (ctrl) | NOT | NOT | NOT | **NOT** | n/a | NOT |
 | P5 COPY then rm        | NOT | NOT | NOT | **RECOVERABLE** | n/a | NOT |
+
+† Lower confidence. Min-mode build-arg recording depends on the BuildKit version.
+This is not a success criterion, and either outcome is a valid measurement. P1, P3,
+P4 and P5 pass no build-args, so their Prov-attest (min) stays NOT.
 
 (The f7310b3 "Final image" column is split into config and layers. Cells carried over
 from f7310b3 are unchanged.)
@@ -160,8 +166,11 @@ from f7310b3 are unchanged.)
 Primary success criterion: **P4 must be NOT-recoverable in every probed column** (the
 control validates the method), and at least one of P1–P3 must be RECOVERABLE in the
 `mode=max` cache column (demonstrates the leak). H1b is supported iff P2b is
-RECOVERABLE in Prov-attest (max), NOT in Prov-attest (min), and NOT in all four
-image/cache columns. A `PROBE_ERROR` or `ABSENT` in any predicted cell is reported as
+RECOVERABLE in the provenance attestation under `--provenance=mode=max` AND
+NOT_RECOVERABLE in all four image/cache columns (final config, final layers, min
+cache, max cache). Whether the value also appears under `--provenance=mode=min` is a
+REPORTED measurement, not a gate: build-arg recording in min-mode provenance is
+BuildKit-version-dependent. A `PROBE_ERROR` or `ABSENT` in any predicted cell is reported as
 a failed measurement, not as NOT. A deviation from any other cell is reported and
 discussed, not hidden.
 
@@ -242,3 +251,7 @@ one registered addition. No data existed when they were made.
 4. **Provenance pinned.** `--provenance=mode=min` is explicit on every build except
    P2b's leak build (`mode=max`), instead of relying on the buildx default.
 5. **bash ≥ 5 required** and enforced in `scripts/lib.sh` (macOS `/bin/bash` is 3.2).
+6. **H1b de-gated from attest-min.** That cell is a reported measurement, not a
+   pass/fail criterion. The attest-min predicted cells for the two build-arg
+   patterns (P2, P2b) are set to REC to match the expected mechanism. The H1b
+   statement (§1) and the P2b row (§3) were aligned so they don't contradict this.
