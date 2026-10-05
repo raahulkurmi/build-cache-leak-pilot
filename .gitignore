@@ -1,0 +1,4 @@
+.work/
+*.tok
+.npmrc
+results/blob*
