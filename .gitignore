@@ -2,3 +2,4 @@
 *.tok
 .npmrc
 results/blob*
+results/markers.txt

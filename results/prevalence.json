@@ -1,0 +1,31 @@
+{
+  "queried_at": "2026-10-05T16:45:54Z",
+  "gh": "gh version 2.101.0 (2026-09-15)",
+  "counts": {
+    "q1_max_registry_cache": {
+      "query": "\"cache-to\" \"type=registry\" \"mode=max\" path:.github/workflows",
+      "total_count": 15008
+    },
+    "q2_any_registry_cache": {
+      "query": "\"cache-to\" \"type=registry\" path:.github/workflows",
+      "total_count": 18976
+    },
+    "q3_gha_cache": {
+      "query": "\"cache-to\" \"type=gha\" path:.github/workflows",
+      "total_count": 171520
+    },
+    "q4_target_push": {
+      "query": "\"target:\" \"push: true\" path:.github/workflows",
+      "total_count": 21952,
+      "upper_bound": true,
+      "note": "Upper-bound signal, noisy: matches any workflow containing both strings, not only non-final target pushes. Registered as upper bound (PREREGISTRATION §7)."
+    },
+    "q4b_target_push_workflows": {
+      "query": "\"--target\" \"--push\" path:.github/workflows",
+      "total_count": 1020,
+      "queried_at": "2026-10-05T16:51:20Z",
+      "gh": "gh version 2.101.0 (2026-09-15)",
+      "note": "PREREGISTRATION §7 Q4 cross-check. Registered but omitted by frozen scripts/05; run separately after the main run, same method (total_count only)."
+    }
+  }
+}

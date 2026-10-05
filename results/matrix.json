@@ -1,0 +1,50 @@
+{
+  "P1": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "RECOVERABLE",
+    "attest_provmax": "n/a",
+    "attest_provmin": "NOT_RECOVERABLE"
+  },
+  "P2": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "NOT_RECOVERABLE",
+    "attest_provmax": "n/a",
+    "attest_provmin": "NOT_RECOVERABLE"
+  },
+  "P2b": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "NOT_RECOVERABLE",
+    "attest_provmax": "RECOVERABLE",
+    "attest_provmin": "NOT_RECOVERABLE"
+  },
+  "P3": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "RECOVERABLE",
+    "attest_provmax": "n/a",
+    "attest_provmin": "NOT_RECOVERABLE"
+  },
+  "P4": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "NOT_RECOVERABLE",
+    "attest_provmax": "n/a",
+    "attest_provmin": "NOT_RECOVERABLE"
+  },
+  "P5": {
+    "final_config": "NOT_RECOVERABLE",
+    "final_layers": "NOT_RECOVERABLE",
+    "cache_min": "NOT_RECOVERABLE",
+    "cache_max": "RECOVERABLE",
+    "attest_provmax": "n/a",
+    "attest_provmin": "NOT_RECOVERABLE"
+  }
+}
