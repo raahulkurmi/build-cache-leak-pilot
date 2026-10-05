@@ -26,7 +26,7 @@ attest-min and P2b · attest-min. Both were predicted RECOVERABLE † and measur
 NOT_RECOVERABLE (matrix.json: P2/attest_provmin, P2b/attest_provmin;
 PREREGISTRATION.md §5). The registration de-gated those two cells before the run, so
 they are reported measurements, not success criteria (PREREGISTRATION.md §5, §10
-item 6). Their miss is itself a measured version fact: at BuildKit v0.33.1, the
+item 6; git: 3fb359c, eb13c54). Their miss is itself a measured version fact: at BuildKit v0.33.1, the
 build-arg marker could not be recovered from the min-mode provenance attestation in our
 setup (matrix.json: P2/attest_provmin, P2b/attest_provmin; versions.txt).
 
