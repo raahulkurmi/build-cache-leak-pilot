@@ -29,7 +29,7 @@ approved.
 ## Layout
 
 ```
-dockerfiles/   P1..P5 — the pattern Dockerfiles (the registered design)
+dockerfiles/   P1..P5 + P2b — the pattern Dockerfiles (the registered design)
 scripts/       00..05 — version capture, registry+builder, secret gen, build, probe, prevalence
 docs/          PREREGISTRATION.md, ETHICS.md, (RESULTS.md after the run)
 results/       versions.txt, markers.txt, matrix.{md,json}, prevalence.json (after the run)
@@ -39,6 +39,7 @@ summary/       one-page ChainSEC lightning-talk summary (after results)
 ## How to reproduce (run only after pre-registration is approved)
 
 ```bash
+bash --version                  # MUST be >= 5 before running anything (see below)
 scripts/00_versions.sh          # record docker/buildx/BuildKit/gh versions
 scripts/01_setup_registry.sh    # local registry:2 + buildx builder on a shared net
 scripts/02_gen_secrets.sh       # generate synthetic FAKE-SECRET markers + contexts
@@ -47,7 +48,13 @@ scripts/04_probe.sh             # probe our own artifacts -> results/matrix.md
 scripts/05_prevalence.sh        # GitHub code-search counts -> results/prevalence.json
 ```
 
-Requires: Docker + buildx (container driver), `jq`, `openssl`, `curl`, `gh` (authed).
+Requires: **bash ≥ 5**, Docker + buildx (container driver), `jq`, `openssl`, `curl`, `gzip`,
+`gh` (authed).
+
+macOS ships `/bin/bash` 3.2, and these scripts use `declare -A`, `${var,,}` and empty
+arrays under `set -u`. Run `brew install bash` and check that `bash --version` (the
+`#!/usr/bin/env bash` shebang resolves through `PATH`) reports 5.x **before step 00**.
+`scripts/lib.sh` exits early under an older bash.
 
 ## Status
 

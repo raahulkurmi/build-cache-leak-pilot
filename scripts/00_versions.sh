@@ -3,6 +3,7 @@ source "$(dirname "$0")/lib.sh"
 {
   echo "# Captured $(date -u +%FT%TZ)"
   echo "## host";            uname -a
+  echo "## bash";            echo "$BASH_VERSION ($BASH)"
   echo "## docker";          docker version
   echo "## buildx";          docker buildx version
   echo "## buildx inspect";  docker buildx inspect "$BUILDER" 2>/dev/null || docker buildx inspect
