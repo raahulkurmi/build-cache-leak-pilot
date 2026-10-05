@@ -1,10 +1,12 @@
 # Results — Build Cache Leak Pilot
 
-Registered design: `prereg-v1` (3fb359c). Raw results: eb13c54. Source tags point to
+Registered design: `prereg-v1` (3fb359c) (git: prereg-v1, 3fb359c). Raw results: eb13c54
+(git: eb13c54). Source tags point to
 `results/matrix.json`, `results/prevalence.json`, `results/versions.txt`,
 `docs/RELATED.md`, and, for predicted values and pattern design only,
 `docs/PREREGISTRATION.md` at `prereg-v1`. A sentence without a tag is labelled
-**Interpretation:** or **Process note:**. Cell counts (36, 31, 28, 3) are computed here by
+**Interpretation:** or **Process note:**. Git-verifiable facts use (git: <ref> —
+verifiable via git log / tag timestamps). Cell counts (36, 31, 28, 3) are computed here by
 comparing matrix.json with the predictions in PREREGISTRATION.md §5.
 
 ---
@@ -215,7 +217,7 @@ pilot does not report a new leak class or a new attack.
 
 1. **A pre-registered, controlled measurement.** The hypotheses, the patterns and the
    full predicted matrix were committed and pushed before any build ran
-   (PREREGISTRATION.md §5, §10; tag `prereg-v1`). Recoverability was then measured across
+   (PREREGISTRATION.md §5, §10; git: prereg-v1). Recoverability was then measured across
    the final image, the `mode=min` and `mode=max` registry cache exports, and the
    min-mode and max-mode provenance attestations. A `--mount=type=secret` control (P4)
    was NOT_RECOVERABLE in all five locations probed for it, with attest-min at BuildKit
@@ -294,4 +296,4 @@ The holes we know about, roughly in order of how much they limit the results.
 12. Process note: **One operator, no independent replication.** One person ran the
     experiment and wrote the probe, and nobody else has re-run it (process fact; not
     recorded in the result files). The scripts and the registered design are in
-    the repository at `prereg-v1` so that someone else can.
+    the repository at `prereg-v1` so that someone else can (git: prereg-v1).
