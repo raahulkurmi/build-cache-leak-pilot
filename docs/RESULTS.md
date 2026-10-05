@@ -216,8 +216,9 @@ pilot does not report a new leak class or a new attack.
 **What this pilot adds.** Within those limits, the contribution is narrow.
 
 1. **A pre-registered, controlled measurement.** The hypotheses, the patterns and the
-   full predicted matrix were committed and pushed before any build ran
-   (PREREGISTRATION.md §5, §10; git: prereg-v1). Recoverability was then measured across
+   full predicted matrix are in the registration commit (prereg-v1 / 3fb359c), which
+   precedes the earliest commit containing any build output (eb13c54) in the repository
+   history (PREREGISTRATION.md §5, §10; git: prereg-v1, eb13c54). Recoverability was then measured across
    the final image, the `mode=min` and `mode=max` registry cache exports, and the
    min-mode and max-mode provenance attestations. A `--mount=type=secret` control (P4)
    was NOT_RECOVERABLE in all five locations probed for it, with attest-min at BuildKit
@@ -278,8 +279,8 @@ The holes we know about, roughly in order of how much they limit the results.
 8. **The design was amended before the run.** Between the initial registration commit
    (f7310b3) and `prereg-v1`, the probe, the build-args, the provenance pinning and the P2b
    predictions were changed. All of this happened before any build, and it is logged in
-   PREREGISTRATION.md §10. A reader should judge the predictions at `prereg-v1`, not at
-   f7310b3.
+   PREREGISTRATION.md §10 (git: f7310b3). A reader should judge the predictions at
+   `prereg-v1`, not at f7310b3.
 9. **Prevalence counts are file matches only.** Part 2 recorded GitHub code-search
    `total_count`, which counts indexed files and is approximate. No contents or names
    were fetched, and no third-party image or cache was accessed (PREREGISTRATION.md §6,
