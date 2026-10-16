@@ -3,9 +3,9 @@
 Queried at 2026-10-16T20:57:36Z with the GitHub CLI. Raw output is reproduced below, pretty-printed with `jq` and otherwise unchanged.
 GitHub keeps repository events for about 90 days, so this file preserves them.
 
-> The pre-rewrite commits referenced here were purged from GitHub on request to remove
-> personal data; this file records what GitHub's server reported before the purge. It
-> cannot be re-checked independently after the purge.
+> A purge of the pre-rewrite commits referenced here was requested from GitHub Support on
+> 2026-10-17 to remove personal data. Until GitHub completes it, those commits may still be
+> reachable by SHA. This file records what GitHub's server reported on 2026-10-16.
 
 ## Summary
 
