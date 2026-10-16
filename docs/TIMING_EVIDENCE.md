@@ -3,6 +3,10 @@
 Queried at 2026-10-16T20:57:36Z with the GitHub CLI. Raw output is reproduced below, pretty-printed with `jq` and otherwise unchanged.
 GitHub keeps repository events for about 90 days, so this file preserves them.
 
+> The pre-rewrite commits referenced here were purged from GitHub on request to remove
+> personal data; this file records what GitHub's server reported before the purge. It
+> cannot be re-checked independently after the purge.
+
 ## Summary
 
 All timestamps are UTC and were recorded by GitHub's servers, not by the author.
@@ -14,16 +18,23 @@ All timestamps are UTC and were recorded by GitHub's servers, not by the author.
 | 2026-10-05T20:34:26Z | force_push (first history rewrite) | `eb13c54` → `66cddeb` |
 
 Neither API lists the commits contained in a push. Only the before and after heads are
-recorded. The pushed SHAs no longer exist on any branch, but GitHub still serves them by
-SHA. Their metadata (below) lets them be matched to the current history by **tree hash**.
-Identical trees mean identical file contents.
+recorded.
 
-| Pushed SHA (GitHub) | Tree | Same tree as (before 2026-10-17 rewrite) | Current SHA |
-|---|---|---|---|
-| `f7310b3` | `018ecd4` | `73695c2` Pre-registration | `8b9e1b7` (tree unchanged) |
-| `74cd563` | `3f3e16a` | `d3546f4` Pre-run harness fixes | `1bf7415` (tree unchanged) |
-| `3fb359c` | `b5eb227` | `51d2c55` Pre-run de-gate (`prereg-v1`) | `65b225e` (tree unchanged) |
-| `eb13c54` | `71a9670` | `0092d63` Raw results | `1da575f` (tree differs only by the hostname redaction in `results/versions.txt`) |
+## Tree-hash matches (checked 2026-10-16T21:06:06Z)
+
+On 2026-10-16 (UTC), the author fetched each pushed commit from GitHub by SHA
+(`gh api repos/raahulkurmi/build-cache-leak-pilot/git/commits/<sha>`). Its tree hash was
+then compared with the commits in the current history. Identical trees mean identical
+file contents. The "Current commit" column refers to the history after the
+2026-10-17 (IST) rewrite (see [COMMIT_MAP.md](COMMIT_MAP.md)).
+
+| Pushed commit (GitHub) | Tree reported by GitHub | Current commit | Current tree | Match |
+|---|---|---|---|---|
+| `f7310b33886915d7f8af11537fe738206515c14a` (ancestor of first head) | `018ecd4c413c01a787c4e4732b6c2ede472e0988` | `8b9e1b7bd835545e4b95958df96e67b0e28959c4` Pre-registration | `018ecd4c413c01a787c4e4732b6c2ede472e0988` | identical |
+| `74cd563db4e4d8f60130ed90d1d5aeed765299be` (ancestor of first head) | `3f3e16ac2a2d0b6195af50847070b10690873c53` | `1bf7415dddae622dd17937e46f95a5291042dde4` Pre-run harness fixes | `3f3e16ac2a2d0b6195af50847070b10690873c53` | identical |
+| `3fb359c45c9164ce4e941c7df9d44a94ecd7addb` (head at branch creation) | `b5eb227945bc11cc795aaa765e42e3ed93380403` | `65b225e71d9d6928455711a632e6216abcbc8d0b` (`prereg-v1`) | `b5eb227945bc11cc795aaa765e42e3ed93380403` | identical |
+| `eb13c549f682f34eb9d5370fe2b8e5c2187cc0d5` (head after push) | `71a96707e8f267260347d6056d7593a8c6e09a26` | `1da575f8740230b3bbad1ba4b0c3b7346fde04e4` Raw results | `4cc49674c23e85b6dae47baf42b5f68f6027aad2` | identical to the pre-2026-10-17 commit `0092d63`; the current tree differs only by the one-line hostname redaction in `results/versions.txt` |
+| `66cddebef5b911458ae64a187003a4c564569df6` (head after force push) | `4261e1acc469a0edf27aa267de68c862fcdc5ad1` | `d30856957733b364fe23ef41643cf844675003ab` | `6ec6d12e173cfb563b1293047193866dd64d403d` | differs only by the same one-line redaction |
 
 What the data shows:
 
@@ -221,9 +232,10 @@ What the data does not show:
 ]
 ```
 
-## Raw: pushed commits, `gh api repos/raahulkurmi/build-cache-leak-pilot/git/commits/<sha>`
+## Raw: pushed commits, `gh api repos/raahulkurmi/build-cache-leak-pilot/git/commits/<sha>` (fetched 2026-10-16T20:57Z)
 
-Fields: sha, tree, parents, author and committer dates. Commit messages are omitted.
+Fields: sha, tree, parents, author and committer dates. Other fields, including commit
+messages, are omitted.
 
 ```json
 [
