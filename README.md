@@ -19,24 +19,43 @@ out of the final image still get published through registry build caches
   `cache-to type=registry` with `mode=max`, and those that push intermediate stages.
   Counts only — no repository names.
 
-## Pre-registration
+## Results
 
-The hypotheses, patterns, predicted results matrix, and counting method are committed
-**before any build is run** in [docs/PREREGISTRATION.md](docs/PREREGISTRATION.md).
-This is the review gate: the experiment is not executed until the pre-registration is
-approved.
+Results, including which predictions missed, are in [docs/RESULTS.md](docs/RESULTS.md).
+Read them with the [Limitations](docs/RESULTS.md#5-limitations) section: one BuildKit
+version, one host, one run, and a local registry.
+
+## Pre-registration and history
+
+The hypotheses, patterns, predicted results matrix and counting method are in
+[docs/PREREGISTRATION.md](docs/PREREGISTRATION.md).
+
+- The registered predictions were committed in `65b225e` (`prereg-v1`), before the
+  results commit `1da575f`.
+- Commit dates are set by the author, so commit order alone is not independent
+  evidence of timing.
+- The history was rewritten twice, both times preserving author and committer dates and
+  commit order:
+  - on 2026-10-05, to remove AI co-author trailers from commit messages;
+  - on 2026-10-17, to replace a work email address and remove a hardware (MAC) address
+    from a hostname in `results/versions.txt`.
+
+  [docs/COMMIT_MAP.md](docs/COMMIT_MAP.md) maps old SHAs to new ones.
+- The `prereg-v1` tag was recreated after the run. It points to the registered
+  design but is not timing evidence.
+- GitHub's server-side push records are in
+  [docs/TIMING_EVIDENCE.md](docs/TIMING_EVIDENCE.md).
 
 ## Layout
 
 ```
 dockerfiles/   P1..P5 + P2b — the pattern Dockerfiles (the registered design)
 scripts/       00..05 — version capture, registry+builder, secret gen, build, probe, prevalence
-docs/          PREREGISTRATION.md, ETHICS.md, (RESULTS.md after the run)
-results/       versions.txt, markers.txt, matrix.{md,json}, prevalence.json (after the run)
-summary/       one-page ChainSEC lightning-talk summary (after results)
+docs/          PREREGISTRATION.md, ETHICS.md, RESULTS.md, RELATED.md, TIMING_EVIDENCE.md, COMMIT_MAP.md
+results/       versions.txt, matrix.{md,json}, verdicts.{csv,json}, prevalence.json
 ```
 
-## How to reproduce (run only after pre-registration is approved)
+## How to reproduce
 
 ```bash
 bash --version                  # MUST be >= 5 before running anything (see below)
@@ -58,4 +77,11 @@ arrays under `set -u`. Run `brew install bash` and check that `bash --version` (
 
 ## Status
 
-Pre-registration drafted. **No experiment has been run.** Awaiting review.
+The experiment has been run once, at BuildKit v0.33.1. Results are in
+[docs/RESULTS.md](docs/RESULTS.md).
+
+## License
+
+Code (`scripts/`, `dockerfiles/`) is under the [MIT License](LICENSE). Documentation
+and results (`docs/`, `results/`, this README) are under
+[CC BY 4.0](LICENSE-CC-BY-4.0).
