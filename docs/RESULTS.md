@@ -13,8 +13,6 @@ comparing matrix.json with the predictions in PREREGISTRATION.md §5.
 
 ## 1. Scorecard
 
-> **DRAFT. Rahul and the reviewer finalise the wording.**
-
 Of 31 pre-registered cells, 28 matched and 3 missed (computed here: matrix.json, all
 patterns/all locations, against PREREGISTRATION.md §5). One miss is primary: P2 · max cache was predicted
 RECOVERABLE in the registration (PREREGISTRATION.md §5 at `prereg-v1`) and measured
