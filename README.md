@@ -1,5 +1,13 @@
 # build-cache-leak-pilot
 
+## TL;DR
+
+- **Question.** Do secrets that a multi-stage Docker build keeps out of the final image still get published through a `mode=max` registry build cache or a provenance attestation?
+- **What was done.** Six Dockerfile patterns each put a synthetic secret into a builder stage a different way; each was built once at BuildKit v0.33.1, pushed to a local registry, and probed in six locations ([docs/RESULTS.md](docs/RESULTS.md) §1).
+- **Headline.** A secret used only in a builder stage did not appear in the final image, but when it was written to a file there (P1, P3, P5) it was published in the `mode=max` build cache ([results/matrix.md](results/matrix.md)). 28 of 31 pre-registered predictions held and 3 missed, one of them primary (P2 · `mode=max` cache).
+- **What it does not show.** One BuildKit version, one host, one run, a local registry and synthetic markers. It measures no real leak, and the GitHub code-search counts are string matches, not exposure ([Limitations](docs/RESULTS.md#5-limitations)).
+- **Pre-registration.** [docs/PREREGISTRATION.md](docs/PREREGISTRATION.md) at `prereg-v1` (`65b225e`). That tree was the head of `main` on GitHub at 2026-10-05T15:54:58Z, before the first results push ([docs/TIMING_EVIDENCE.md](docs/TIMING_EVIDENCE.md), which also covers the history rewrites).
+
 A small, pre-registered pilot study: **do secrets that multi-stage Docker builds keep
 out of the final image still get published through registry build caches
 (`--cache-to type=registry,mode=max`) or pushed intermediate stages?**
@@ -79,6 +87,15 @@ arrays under `set -u`. Run `brew install bash` and check that `bash --version` (
 
 The experiment has been run once, at BuildKit v0.33.1. Results are in
 [docs/RESULTS.md](docs/RESULTS.md).
+
+## How this fits
+
+This pilot is one of several studying one question: when a security check passes, what has
+it actually established? The question started from a threshold-signing project,
+[threshold-signing-k8s](https://github.com/raahulkurmi/threshold-signing-k8s). Here the check
+that passes is inspection of the final image: its config and layers held no marker for any
+pattern, yet the `mode=max` cache pushed alongside it held the P1, P3 and P5 markers, in this
+pilot's setup.
 
 ## License
 

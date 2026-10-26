@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "build-cache-leak-pilot: a pre-registered pilot on secrets in multi-stage Docker build caches"
+authors:
+  - family-names: Kurmi
+    given-names: Rahul
+repository-code: "https://github.com/raahulkurmi/build-cache-leak-pilot"
+url: "https://github.com/raahulkurmi/build-cache-leak-pilot"
+version: 75b159d
+commit: 75b159df4096b2b117c8c5248c7452cb97e2844c
+type: software
+preferred-citation:
+  type: software
+  title: "build-cache-leak-pilot: a pre-registered pilot on secrets in multi-stage Docker build caches"
+  authors:
+    - family-names: Kurmi
+      given-names: Rahul
+  year: 2026
+  url: "https://github.com/raahulkurmi/build-cache-leak-pilot"
